@@ -2,9 +2,7 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
    try {
-      const connect = await mongoose.connect(
-         "mongodb://localhost/final-exam-DB06"
-      );
+      const connect = await mongoose.connect(DATABASE_URL);
    } catch (error) {
       console.log("error", error);
    }
