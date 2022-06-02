@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -10,13 +11,13 @@ var productsRouter = require("./routes/products");
 var orderRouter = require("./routes/order");
 var categoryRouter = require("./routes/category");
 var brandsRouter = require("./routes/brand");
-
+var uploadRouter = require("./routes/upload");
 const connectDB = require("./config/db");
 const { errorHandle } = require("./middleWare/errorHandler");
 require("dotenv").config();
 connectDB();
 var app = express();
-
+app.use(cors());
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
@@ -33,7 +34,7 @@ app.use("/api/products", productsRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/brands", brandsRouter);
-
+app.use("/api/upload", uploadRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
    next(createError(404));
