@@ -10,7 +10,7 @@ const protect = expressAsyncHandler(async (req, res, next) => {
       const token = authorization.split(" ")[1];
       let user = "";
       try {
-         const resultVerify = JWT.verify(token, "masobimat");
+         const resultVerify = JWT.verify(token, process.env.SECRET_KEY);
          user = await Users.findById(resultVerify.id).select("-password ");
 
          if (!user) {
