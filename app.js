@@ -13,7 +13,7 @@ var brandsRouter = require("./routes/brand");
 
 const connectDB = require("./config/db");
 const { errorHandle } = require("./middleWare/errorHandler");
-
+require("dotenv").config();
 connectDB();
 var app = express();
 

@@ -23,10 +23,11 @@ const registerUser = expressAsyncHandler(async (req, res) => {
       throw new Error("user already exists");
    } else {
       try {
+         const newPassword = await hashing(password);
          const newUser = await Users.create({
             name,
             email,
-            password: hashing(password),
+            password: newPassword,
             gender,
             birthday,
             phoneNumber,
