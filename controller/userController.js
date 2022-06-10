@@ -15,12 +15,13 @@ const registerUser = expressAsyncHandler(async (req, res) => {
       phoneNumber,
       address,
       position,
+      avatar,
    } = req.body;
 
    const userExist = await Users.findOne({ email });
    if (userExist) {
       res.status("400");
-      throw new Error("user already exists");
+      throw new Error("Email already exists");
    } else {
       try {
          const newPassword = await hashing(password);
@@ -33,16 +34,18 @@ const registerUser = expressAsyncHandler(async (req, res) => {
             phoneNumber,
             address,
             position,
+            avatar,
          });
          if (newUser) {
             const {
                name,
                email,
-               password,
                gender,
                birthday,
                phoneNumber,
                address,
+               avatar,
+               position,
             } = newUser;
             res.status("200").json({
                _id: newUser._id,
@@ -52,6 +55,8 @@ const registerUser = expressAsyncHandler(async (req, res) => {
                birthday,
                phoneNumber,
                address,
+               avatar,
+               position,
                token: generateToken(newUser._id),
             });
          } else {
@@ -92,12 +97,19 @@ const loginUser = expressAsyncHandler(async (req, res) => {
 });
 
 const getProfilesUser = expressAsyncHandler((req, res) => {
-   const { name, email, gender, birthday, phoneNumber, address } = req.user;
+   const { name, email, gender, birthday, phoneNumber, address, position } =
+      req.user;
 
    if (req.user) {
-      return res
-         .status("200")
-         .json({ name, email, gender, birthday, phoneNumber, address });
+      return res.status("200").json({
+         name,
+         email,
+         gender,
+         birthday,
+         phoneNumber,
+         address,
+         position,
+      });
    } else {
       res.status("400");
       throw new Error("user is not valid");

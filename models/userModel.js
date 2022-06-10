@@ -24,6 +24,7 @@ const userSchema = mongoose.Schema({
    shoppingCart: { type: [productIncartSchema] },
    address: { type: Object(Address), required: true },
    position: { type: Number, require: true, default: 0 },
+   avatar: { type: String },
    isBlocking: {
       type: Object(blocking),
       require: true,
