@@ -156,6 +156,7 @@ const updateProfileUser = expressAsyncHandler(async (req, res) => {
          address: newUpdate.address,
          password: newUpdate.password,
          avatar: newUpdate.avatar,
+         email: newUpdate.email,
       });
    } catch (error) {
       res.status("400");
