@@ -28,6 +28,7 @@ const categoryModel = mongoose.Schema({
    categoryID: { type: mongoose.Schema.Types.ObjectId, required: true },
    name: { type: String, required: true },
    type: { type: String, required: true },
+   titleType: { type: String, require: true },
 });
 
 const isDeleteModel = mongoose.Schema({
@@ -44,7 +45,7 @@ const productModel = mongoose.Schema({
    user: { type: mongoose.Schema.Types.ObjectId, required: true },
    name: { type: String, required: true },
    image: { type: Object(imageDetailModel), required: true },
-   brand: { type: mongoose.Schema.Types.ObjectId, required: true },
+   brand: { type: String, required: true },
    category: { type: [categoryModel] },
    desc: { type: String, required: true },
    reviews: { type: [reviewModel] },

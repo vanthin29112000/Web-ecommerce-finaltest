@@ -97,11 +97,22 @@ const loginUser = expressAsyncHandler(async (req, res) => {
 });
 
 const getProfilesUser = expressAsyncHandler((req, res) => {
-   const { name, email, gender, birthday, phoneNumber, address, position } =
-      req.user;
+   const {
+      _id,
+      name,
+      email,
+      gender,
+      birthday,
+      phoneNumber,
+      address,
+      position,
+      avatar,
+      shoppingCart,
+   } = req.user;
 
    if (req.user) {
       return res.status("200").json({
+         _id,
          name,
          email,
          gender,
@@ -109,6 +120,8 @@ const getProfilesUser = expressAsyncHandler((req, res) => {
          phoneNumber,
          address,
          position,
+         avatar,
+         shoppingCart,
       });
    } else {
       res.status("400");
@@ -117,7 +130,8 @@ const getProfilesUser = expressAsyncHandler((req, res) => {
 });
 
 const updateProfileUser = expressAsyncHandler(async (req, res) => {
-   const { name, password, gender, birthday, phoneNumber, address } = req.body;
+   const { name, password, gender, birthday, phoneNumber, address, avatar } =
+      req.body;
 
    const user = await Users.findById(req.user._id);
 
@@ -129,6 +143,8 @@ const updateProfileUser = expressAsyncHandler(async (req, res) => {
    user.birthday = birthday || user.birthday;
    user.phoneNumber = phoneNumber || user.phoneNumber;
    user.address = address || user.address;
+   user.avatar = avatar || user.avatar;
+
    try {
       const newUpdate = await user.save();
       res.status("200").json({
@@ -139,6 +155,7 @@ const updateProfileUser = expressAsyncHandler(async (req, res) => {
          phoneNumber: newUpdate.phoneNumber,
          address: newUpdate.address,
          password: newUpdate.password,
+         avatar: newUpdate.avatar,
       });
    } catch (error) {
       res.status("400");
